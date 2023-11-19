@@ -1,5 +1,5 @@
 # metrics-rs
-Various implementations for metrics used in ML/DL field.
+Various implementations of metrics used in ML/DL field.
 
 ### features provided
 - rouge-n score
