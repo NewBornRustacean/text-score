@@ -1,3 +1,6 @@
+//! This is an implementation for metrics to be used in various ML/DL fields.
+//! for now, split_whitespace based rouge-n score is provided.
+//!
 use std::collections::HashMap;
 use std::cmp::{min, max};
 
