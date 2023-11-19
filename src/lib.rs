@@ -1,6 +1,8 @@
 use std::collections::HashMap;
 use std::cmp::{min, max};
 
+use approx::assert_abs_diff_eq;
+
 pub struct Score{
     precision: f32,
     recall:f32,
@@ -35,9 +37,8 @@ fn ngram_based_score(predicted_ngrams:HashMap<Vec<&str>, u32>, target_ngrams:Has
         intersection_ngrams_count += min(target_cnt, predicted_ngrams.get(ngram).unwrap_or(&0));
 
     }
-
-    let p:f32 = (intersection_ngrams_count / max(prediction_ngrams_count, 1)) as f32;
-    let r:f32 = (intersection_ngrams_count / max(target_ngrams_count, 1)) as f32;
+    let p:f32 = intersection_ngrams_count as f32/ max(prediction_ngrams_count, 1) as f32;
+    let r:f32 = intersection_ngrams_count as f32/ max(target_ngrams_count, 1) as f32;
     let f:f32 = f1(p, r);
 
     return Score{precision:p, recall:r, f1:f};
@@ -47,17 +48,15 @@ pub fn rouge(input:&str, reference: &str, n:usize) -> Result<Score, String>{
     if n<1{
         return Err("n should be 1>=1".to_string());
     }
-    else{
-        let input_words = input.split_whitespace().collect();
-        let reference_words = reference.split_whitespace().collect();
+    let input_words = input.split_whitespace().collect();
+    let reference_words = reference.split_whitespace().collect();
 
-        // create n-grams
-        let mut input_ngrams = create_ngrams(input_words, n);
-        let mut reference_ngrams = create_ngrams(reference_words, n);
+    // create n-grams
+    let mut input_ngrams = create_ngrams(input_words, n);
+    let mut reference_ngrams = create_ngrams(reference_words, n);
 
-        // get n-gram based f1 score
-        return Ok(ngram_based_score(input_ngrams, reference_ngrams));
-    }
+    // get n-gram based f1 score
+    return Ok(ngram_based_score(input_ngrams, reference_ngrams));
 }
 
 
@@ -79,7 +78,8 @@ mod test_metrics  {
     #[test]
     fn test_f1(){
         assert_eq!(1.0, f1(1.0, 1.0));
-        assert_eq!(1.0, f1(1.0, 1.0));
+        assert_eq!(0.0, f1(0.0, 1.0));
+        assert_eq!(0.0, f1(1.0, 0.0));
 
     }
 
@@ -100,8 +100,16 @@ mod test_metrics  {
         let score = rouge("this is identical case.", "this is identical case.", 1).unwrap();
         assert_eq!(1.0, score.f1);
 
-        // // subset:
-        // let score = rouge("this is identical case.", "wow this is identical case.", 1).unwrap();
-        // assert_eq!(1.0, score.f1);
+        // subset: 4/5 correct
+        let score = rouge("this is identical case.", "wow this is identical case.", 1).unwrap();
+        assert_abs_diff_eq!(0.888,  score.f1, epsilon = 1e-3);
+
+        // duplicated words case: 1.0
+        let score = rouge("it is what it is.", "it is what it is.", 1).unwrap();
+        assert_abs_diff_eq!(1.0,  score.f1, epsilon = 1e-3);
+
+        // duplicated words case: 5/6 correct, p=1, r=5/6.
+        let score = rouge("it is what it is.", "it is really what it is.", 1).unwrap();
+        assert_abs_diff_eq!(f1(1.0, 5.0/6.0),  score.f1, epsilon = 1e-3);
     }
 }
