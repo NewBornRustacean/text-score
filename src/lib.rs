@@ -104,7 +104,7 @@ pub fn create_ngrams(tokens: Vec<&str>, n: usize) -> HashMap<Vec<&str>, u32> {
 /// ### Examples
 ///
 /// ```
-/// use std::collections::HashMap;
+/// use std::collections::{HashMap, hash_map};
 /// use metrics_rs::{ngram_based_score, Score}; // Replace with the actual module name
 ///
 /// let predicted_ngrams = hashmap! { vec!["this", "is"] => 2, vec!["is", "an"] => 1 };
@@ -184,7 +184,7 @@ pub fn ngram_based_score(predicted_ngrams:HashMap<Vec<&str>, u32>, target_ngrams
 /// - The resulting scores are returned in a `Score` struct if the operation is successful.
 pub fn rouge(input:&str, reference: &str, n:usize) -> Result<Score, String>{
     if n<1{
-        return Err("n should be 1>=1".to_string());
+        return Err("should be n ß>=1".to_string());
     }
     let input_words = input.split_whitespace().collect();
     let reference_words = reference.split_whitespace().collect();
