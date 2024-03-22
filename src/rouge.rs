@@ -27,7 +27,7 @@ pub use crate::commons::{Score, f1, precision, recall};
 ///
 /// ```
 /// use std::collections::HashMap;
-/// use metrics_rs::rouge::create_ngrams;
+/// use text_score::rouge::create_ngrams;
 ///
 /// let tokens = vec!["this", "is", "an", "example"];
 /// let n = 2;
@@ -71,7 +71,7 @@ pub fn create_ngrams(tokens: Vec<&str>, n: usize) -> HashMap<Vec<&str>, u32> {
 ///
 /// ```
 /// use std::collections::{HashMap, hash_map};
-/// use metrics_rs::rouge::{ngram_based_score, Score}; // Replace with the actual module name
+/// use text_score::rouge::{ngram_based_score, Score}; // Replace with the actual module name
 ///
 /// let predicted_ngrams = hashmap! { vec!["this", "is"] => 2, vec!["is", "an"] => 1 };
 /// let target_ngrams = hashmap! { vec!["this", "is"] => 3, vec!["is", "an"] => 2 };
@@ -126,7 +126,7 @@ pub fn ngram_based_score(predicted_ngrams:HashMap<Vec<&str>, u32>, target_ngrams
 /// ### Examples
 ///
 /// ```
-/// use metrics_rs::rouge::{rouge_n, Score}; // Replace with the actual module name
+/// use text_score::rouge::{rouge_n, Score}; // Replace with the actual module name
 ///
 /// let input_text = "This is a sample sentence for evaluation.";
 /// let reference_text = "This is a sample sentence for testing.";
