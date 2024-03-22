@@ -1,9 +1,10 @@
 # metrics-rs
-Various implementations of metrics used in ML/DL field.
+Various implementations of metrics used in ML/DL.
 
 ### features provided
 - rouge-n score
 ### features to be added
+- [ ] rouge-l, rouge-s etc.
 - [ ] text normalization
 - [ ] BLEU score
 - [ ] many more..
