@@ -1,5 +1,5 @@
 [package]
-name = "metrics-rs"
+name = "text-score"
 version = "0.1.0"
 edition = "2021"
 authors = ["NewBronRustacean <huiseomkim@gmail.com>"]
