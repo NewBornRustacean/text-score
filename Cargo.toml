@@ -2,8 +2,18 @@
 name = "metrics-rs"
 version = "0.1.0"
 edition = "2021"
-
+authors = ["NewBronRustacean <huiseomkim@gmail.com>"]
+readme = "README.md"
+description = "Various implementations of metrics used in ML/DL."
+repository = "https://github.com/NewBornRustacean/metrics-rs"
+license = "MIT OR Apache-2.0"
+keywords = ["metric", "nlp", "evaluation", "rouge", "bleu"]
+categories = ["development-tools::cargo-plugins"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+doctest = false
 
 [dependencies]
 approx = { version = "0.5.1", features = [] }
+anyhow = "1.0.81"
