@@ -3,7 +3,7 @@
 //!
 use std::collections::HashMap;
 use std::cmp::{min, max};
-
+use anyhow::{Result, Error};
 pub use crate::commons::{Score, f1, precision, recall};
 
 
@@ -148,10 +148,11 @@ pub fn ngram_based_score(predicted_ngrams:HashMap<Vec<&str>, u32>, target_ngrams
 /// - The input and reference texts are tokenized into words, and n-grams are created using the `create_ngrams` function.
 /// - The n-gram based scores are then calculated using the `ngram_based_score` function.
 /// - The resulting scores are returned in a `Score` struct if the operation is successful.
-pub fn rouge_n(input:&str, reference: &str, n:usize) -> Result<Score, String>{
-    if n<1{
-        return Err("should be n ß>=1".to_string());
+pub fn rouge_n(input:&str, reference: &str, n:usize) -> Result<Score>{
+    if n < 1 {
+        return Err(Error::msg("n should be >= 1"));
     }
+
     let input_words = input.split_whitespace().collect();
     let reference_words = reference.split_whitespace().collect();
 
@@ -160,5 +161,5 @@ pub fn rouge_n(input:&str, reference: &str, n:usize) -> Result<Score, String>{
     let mut reference_ngrams = create_ngrams(reference_words, n);
 
     // get n-gram based f1 score
-    return Ok(ngram_based_score(input_ngrams, reference_ngrams));
+    Ok(ngram_based_score(input_ngrams, reference_ngrams))
 }

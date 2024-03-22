@@ -30,4 +30,8 @@ fn test_rouge1() {
     // duplicated words case: 5/6 correct, p=1, r=5/6.
     let score = rouge_n("it is what it is.", "it is really what it is.", 1).unwrap();
     assert_abs_diff_eq!(f1(1.0, 5.0/6.0),  score.f1, epsilon = 1e-3);
+
+    let result = rouge_n("it is what it is.", "it is really what it is.", 0);
+    assert!(result.is_err());
+
 }
