@@ -1,4 +1,4 @@
-# metrics-rs
+# text-score
 Various implementations of metrics used in ML/DL.
 
 ### features provided
