@@ -6,7 +6,7 @@
 ///
 /// ### Examples
 /// ```
-/// use metrics_rs::commons::Score;
+/// use text_score::commons::Score;
 ///
 /// // Create a Score instance
 /// let score = Score {
